@@ -1,0 +1,24 @@
+{
+  "name": "rd-movie-bot",
+  "version": "1.0.0",
+  "description": "Discord Movie Bot",
+  "main": "index.js",
+  "scripts": {
+    "start": "node bot.js"
+  },
+  "author": "Rohan Das",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "discord-command-parser": "^1.4.3",
+    "discord-paginationembed": "^2.1.0",
+    "discord.js": "^12.2.0",
+    "dotenv": "^8.2.0",
+    "format-duration": "^1.3.1",
+    "moment": "^2.27.0",
+    "mongoose": "^5.9.25",
+    "moviedb-promise": "^3.0.3",
+    "querystring": "^0.2.0",
+    "yifysubtitles-api": "^1.0.0"
+  }
+}
