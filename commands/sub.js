@@ -97,6 +97,7 @@ module.exports = {
 						});
 					});
 					await Subtitle.insertMany(dbList);
+					list = dbList;
 				}
 			}
 
