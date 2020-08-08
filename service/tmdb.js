@@ -1,15 +1,24 @@
 const { MovieDb } = require('moviedb-promise');
+const { GetIMDBid } = require('../inc/helper');
 const moviedb = new MovieDb( process.env.TMDB_TOKEN );
 
 
 /**
  * Search movie
+ * Accepts: movie name or imdb link
  */
 const Search = async (movieName ) => {
-	let response = await moviedb.searchMovie({ query: movieName, external_source: 'imdb_id' });
+	const imdb_id = GetIMDBid( movieName );
+	let response;
+	if ( imdb_id ) {
+		response = await moviedb.find({id:imdb_id, external_source: 'imdb_id'});
+	} else {
+		response = await moviedb.searchMovie({ query: movieName, external_source: 'imdb_id' });
+	}
+	let results = imdb_id ? response.movie_results : response.results;
 	let movies = [];
-	if ( response.total_results > 0 ) {
-		response.results.forEach(item=>{
+	if (  results.length > 0 ) {
+		results.forEach(item=>{
 			movies.push({
 				id: item.id,
 				title: item.title,

@@ -1,6 +1,6 @@
 const { MessageEmbed } = require('discord.js');
 const { Search, Details } = require('../service/tmdb');
-const { TextPadding, DateFormat } = require('../inc/helper')
+const { TextPadding, DateFormat, GetIMDBid } = require('../inc/helper')
 const Movie = require('../db/movie');
 
 
@@ -57,18 +57,23 @@ module.exports = {
 		const guild = message.channel.guild.id;
 		const user = message.member.user.toString();
 
-
-		// Check db
-		let mv = await Movie.findOne( { 
-			guild: guild,
-			title: { "$regex": movieName, "$options": "i" }
-		}).lean().exec();
-
+		const imdb_id = GetIMDBid( movieName );
+		let mv;
+		if ( imdb_id ) {
+			mv = await Movie.findOne( { 
+				guild: guild,
+				imdb_id: imdb_id
+			}).lean().exec();
+		} else {
+			mv = await Movie.findOne( { 
+				guild: guild,
+				title: { "$regex": movieName, "$options": "i" }
+			}).lean().exec();
+		}
+		
 		if ( ! mv ) {
 			// Search tmdb
 			let tmdb_result = await Search( movieName );
-			// console.log(tmdb_result)
-
 			if ( tmdb_result.length ) {
 				let movie = tmdb_result[0];
 				let movieDetails = await Details( movie.id );
