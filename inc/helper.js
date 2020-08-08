@@ -35,10 +35,16 @@ const GetSettings = async (guild) => {
 	return settings;
 }
 
+const GetIMDBid = str => {
+	const match = str.match(/^(?:https?:\/\/)(?:www\.)?imdb\.com\/title\/([a-z]+([0-9]+)).*$/);
+	return ( match && match.length > 2 ) ? match[1] : '';
+}
+
 module.exports = {
 	WHITESPACE,
 	TextPadding,
 	DateFormat,
 	HoursFormat,
-	GetSettings
+	GetSettings,
+	GetIMDBid
 }
