@@ -1,16 +1,14 @@
 version: '2'
 services:
-  bot:
+  moviebot:
     container_name: "moviebot"
     build: .
     depends_on: 
       - database
   database:
-    logging:
-      driver: none
-    image: 'mongo'
-    container_name: "mongodb"
+    image: 'mongo:4.2.8'
+    container_name: "database"
     volumes:
-      - ~/moviebot-data:/data/db
+      - /home/docker/moviebot-data:/data/db
     ports:
       - "27017:27017"
