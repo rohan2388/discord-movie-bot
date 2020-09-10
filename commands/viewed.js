@@ -28,7 +28,7 @@ module.exports = {
 
 		const list = await Movie.find( { 
 			guild: guild,
-			title: { "$regex": movieName, "$options": "i" }
+			title: { "$regex": movieName, "$options": "i", viewed: false }
 		}).lean().exec();
 
 		if ( list.length ) {
