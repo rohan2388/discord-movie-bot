@@ -70,7 +70,8 @@ module.exports = {
 		
 		const mv = await Movie.findOne( { 
 			guild: guild,
-			title: { "$regex": movieName, "$options": "i" }
+			title: { "$regex": movieName, "$options": "i" },
+			viewed: false
 		}).lean().exec();
 
 		if ( mv ) {
