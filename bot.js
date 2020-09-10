@@ -55,7 +55,10 @@ Client.on('message', async (message)=>{
 			if ( executor.admin && !message.member.hasPermission("ADMINISTRATOR")) {
 				message.channel.send(`This command requires the user to have an administrator role in the server 🚫`);
 			} else {
-				executor.execute( message, body ).then(()=>{}).catch(err=>console.log(err.message));				
+				executor.execute( message, body ).then(()=>{}).catch(err=>{
+					message.channel.send(`⚠️ Error: ${err.message}`);
+					console.log(err);
+				});				
 			}
 		}
 	}
